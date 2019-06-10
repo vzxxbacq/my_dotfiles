@@ -1,0 +1,675 @@
+[bar/top]
+enable-ipc = true
+bottom = true
+monitor = eDP-1-1
+width = 100%
+height = 23
+dpi = 192
+
+background = #88000000
+foreground = #eee
+
+line-color = ${bar/bottom.background}
+line-size = 1
+
+padding-left = 0
+padding-right = 0
+module-margin-left = 3
+module-margin-right = 3
+
+separator =
+
+modules-left = cpu memory
+modules-right = wireless-network consumation
+font-0 = PingFang\ SC:size=6;0
+;font-1 = Material\ Design\ Icons:size=6;2
+font-1 = xos4\ Terminus:size=6;0
+font-2 = Wuncon Siji:pixelsize=6;1
+font-3 = FontAwesome:size=6;0
+font-4 = unifont:fontformat=truetype:size=6;0
+font-5 = Font\ Awesome\ 5\ Brands:size=6;0
+font-6 = Font\ Awesome\ 5\ Free:size=6;0
+
+wm-restack = i3
+
+tray-position = right
+tray-scale = 1.0
+pseudo-transparency = true
+tray-background = ${self.background}
+tray-maxsize = 64
+tray-offset-y = 0
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+overline-size = 10
+overline-color = ${self.background}
+underline-size = 2
+underline-color = ${self.background}
+
+
+[bar/bottom]
+monitor = ${env:MONITOR:}
+bottom = false
+width = 100%
+height = 20
+dpi = 192
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+background = ${bar/top.background}
+foreground = ${bar/top.foreground}
+
+line-color = ${bar/top.background}
+line-size = 2
+
+spacing = 3
+padding-right = 4
+;module-margin-left = 0
+;module-margin-right = 6
+
+font-0 = PingFang\ SC:size=6;0
+font-1 = FontAwesome:size=6;0
+font-2 = unifont:fontformat=truetype:size=6;0
+font-3 = Material\ Design\ Icons:size=6;2
+font-4 = xos4\ Terminus:size=6;0
+font-5 = Wuncon Siji:pixelsize=6;1
+font-6 = Font\ Awesome\ 5\ Brands:size=6;0
+font-7 = Font\ Awesome\ 5\ Free:size=6;0
+
+modules-left = i3
+modules-right = volume battery networkspeedup networkspeeddown backlight date
+
+[module/volume]
+type = internal/volume
+;speaker-mixer = Speaker
+;headphone-mixer = Headphone
+:headphone-id = 9
+format-muted-padding = 2
+format-volume-padding = 2
+
+format-muted-foreground = #000000
+format-muted-background = #b0b08b
+format-volume-foreground = #000000
+format-volume-background = #b0b08b
+
+
+format-volume = <ramp-volume> <label-volume>
+label-muted =    Muted
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
+
+[module/backlight]
+type = internal/backlight
+
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+card = intel_backlight
+; Available tags:
+;   <label> (default)
+;   <ramp>
+;   <bar>
+format =   <label>
+format-background = #dccbc7
+format-foreground = #000000
+format-padding = 2
+; Available tokens:
+;   %percentage% (default)
+label = %percentage%%
+
+; Only applies if <ramp> is used
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑
+
+; Only applies if <bar> is used
+bar-width = 10
+bar-indicator = |
+bar-fill = ─
+bar-empty = ─
+
+[module/battery]
+type = internal/battery
+
+; This is useful in case the battery never reports 100% charge
+full-at = 100
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = ADP1
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 5
+; see "man date" for details on how to format the time string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+; Default: %H:%M:%S
+time-format = %H:%M
+
+; Available tags:
+;   <label-charging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-charging>
+format-charging = <animation-charging> <label-charging>
+
+; Available tags:
+;   <label-discharging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-discharging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+; Available tags:
+;   <label-full> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+format-full = <ramp-capacity> <label-full>
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw% (unreleased)
+;   %time%
+;   %consumption% (shows current charge rate in watts)
+label-charging =  %percentage%%
+
+format-full-background = #b5bad0
+format-full-foreground = #000000
+format-full-padding = 2
+
+format-charging-background = #b5bad0
+format-charging-foreground = #000000
+format-charging-padding = 2
+format-discharging-background = #b5bad0
+format-discharging-foreground = #000000
+format-discharging-padding = 2
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw% (unreleased)
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+label-discharging = %percentage%%
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw% (unreleased)
+label-full = 
+; Only applies if <ramp-capacity> is used
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+; Only applies if <bar-capacity> is used
+bar-capacity-width = 10
+
+; Only applies if <animation-charging> is used
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+; Framerate in milliseconds
+animation-charging-framerate = 750
+
+; Only applies if <animation-discharging> is used
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+; Framerate in milliseconds
+animation-discharging-framerate = 500
+
+[module/bspwm]
+type = internal/bspwm
+
+; Only show workspaces defined on the same output as the bar
+; NOTE: The bspwm and XRandR monitor names must match, which they do by default.
+; Default: true
+pin-workspaces = true
+
+; Output mode flags after focused state label
+; Default: false
+inline-mode = false
+
+; Create click handler used to focus workspace
+; Default: true
+enable-click = false
+
+; Create scroll handlers used to cycle workspaces
+; Default: true
+enable-scroll = false
+
+; Set the scroll cycle direction
+; Default: true
+reverse-scroll = false
+
+; Use fuzzy (partial) matching on labels when assigning
+; icons to workspaces
+; Example: code;♚ will apply the icon to all workspaces
+; containing 'code' in the label
+; Default: false
+fuzzy-match = true
+; ws-icon-[0-9]+ = label;icon
+; Note that the label needs to correspond with the bspwm workspace name
+ws-icon-0 = code;♚
+ws-icon-1 = office;♛
+ws-icon-2 = graphics;♜
+ws-icon-3 = mail;♝
+ws-icon-4 = web;♞
+ws-icon-default = ♟
+
+; Available tags:
+;   <label-monitor>
+;   <label-state> - gets replaced with <label-(focused|urgent|occupied|empty)>
+;   <label-mode> - gets replaced with <label-(monocle|tiled|fullscreen|floating|locked|sticky|private)>
+; Default: <label-state>
+format = <label-state> <label-mode>
+
+; Available tokens:
+;   %name%
+; Default: %name%
+label-monitor = %name%
+
+; If any values for label-dimmed-N are defined, the workspace/mode
+; colors will get overridden with those values if the monitor is out of focus
+; To only override workspaces in a specific state, use:
+;   label-dimmed-focused
+;   label-dimmed-occupied
+;   label-dimmed-urgent
+;   label-dimmed-empty
+label-dimmed-foreground = #555
+label-dimmed-underline = ${bar/top.background}
+label-dimmed-focused-background = #f00
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-focused = %name%
+label-focused-foreground = #ffffff
+label-focused-background = #3f3f3f
+label-focused-underline = #fba922
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-occupied = %name%
+label-occupied-underline = #555555
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-urgent = %name%
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-underline = #9b0a20
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon%  %name%
+label-empty = %name%
+label-empty-foreground = #55
+
+; The following labels will be used to indicate the layout/mode
+; for the focused workspace. Requires <label-mode>
+;
+; Available tokens:
+;   None
+;label-monocle = 
+;label-tiled = 
+;label-fullscreen = 
+;label-floating = 
+;label-pseudotiled = P
+;label-locked = 
+;label-locked-foreground = #bd2c40
+;label-sticky = 
+;label-sticky-foreground = #fba922
+;label-private = 
+;label-private-foreground = #bd2c40
+
+; Separator in between workspaces
+label-separator = |
+label-separator-padding = 2
+label-separator-foreground = #ffb52a
+
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+format = <label> <ramp-coreload>
+label = 
+ramp-coreload-0 = ▁
+ramp-coreload-0-font = 2
+ramp-coreload-0-foreground = #aaff77
+ramp-coreload-1 = ▂
+ramp-coreload-1-font = 2
+ramp-coreload-1-foreground = #aaff77
+ramp-coreload-2 = ▃
+ramp-coreload-2-font = 2
+ramp-coreload-2-foreground = #aaff77
+ramp-coreload-3 = ▄
+ramp-coreload-3-font = 2
+ramp-coreload-3-foreground = #aaff77
+ramp-coreload-4 = ▅
+ramp-coreload-4-font = 2
+ramp-coreload-4-foreground = #fba922
+ramp-coreload-5 = ▆
+ramp-coreload-5-font = 2
+ramp-coreload-5-foreground = #fba922
+ramp-coreload-6 = ▇
+ramp-coreload-6-font = 2
+ramp-coreload-6-foreground = #ff5555
+ramp-coreload-7 = █
+ramp-coreload-7-font = 2
+ramp-coreload-7-foreground = #ff5555
+
+[module/wireless-network]
+type = internal/network
+interface = wlan1
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 3.0
+
+; Test connectivity every Nth update
+; A value of 0 disables the feature
+; NOTE: Experimental (needs more testing)
+; Default: 0
+;ping-interval = 3
+
+; @deprecated: Define min width using token specifiers (%downspeed:min% and %upspeed:min%)
+; Minimum output width of upload/download rate
+; Default: 3
+udspeed-minwidth = 5
+
+; Accumulate values from all interfaces
+; when querying for up/downspeed rate
+; Default: false
+accumulate-stats = true
+
+; Consider an `UNKNOWN` interface state as up.
+; Some devices like USB network adapters have
+; an unknown state, even when they're running
+; Default: false
+unknown-as-up = true
+; Available tags:
+;   <label-connected> (default)
+;   <ramp-signal>
+format-connected = <ramp-signal> <label-connected>
+
+; Available tags:
+;   <label-disconnected> (default)
+format-disconnected = <label-disconnected>
+
+; Available tags:
+;   <label-connected> (default)
+;   <label-packetloss>
+;   <animation-packetloss>
+format-packetloss = <animation-packetloss> <label-connected>
+
+; All labels support the following tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %local_ip6% [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %linkspeed% [wired]
+
+; Default: %ifname% %local_ip%
+label-connected = %essid% %downspeed:9%
+label-connected-foreground = #eefafafa
+
+; Default: (none)
+label-disconnected = not connected
+label-disconnected-foreground = #66ffffff
+
+; Default: (none)
+;label-packetloss = %essid%
+;label-packetloss-foreground = #eefafafa
+
+; Only applies if <ramp-signal> is used
+ramp-signal-0 = 😱
+ramp-signal-1 = 😠
+ramp-signal-2 = 😒
+ramp-signal-3 = 😊
+ramp-signal-4 = 😃
+ramp-signal-5 = 😈
+
+; Only applies if <animation-packetloss> is used
+animation-packetloss-0 = ⚠
+animation-packetloss-0-foreground = #ffa64c
+animation-packetloss-1 = 📶
+animation-packetloss-1-foreground = #000000
+; Framerate in milliseconds
+animation-packetloss-framerate = 500
+
+[module/network]
+type = internal/network
+interface = eth1
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 3.0
+
+; Test connectivity every Nth update
+; A value of 0 disables the feature
+; NOTE: Experimental (needs more testing)
+; Default: 0
+;ping-interval = 3
+
+; @deprecated: Define min width using token specifiers (%downspeed:min% and %upspeed:min%)
+; Minimum output width of upload/download rate
+; Default: 3
+udspeed-minwidth = 5
+
+; Accumulate values from all interfaces
+; when querying for up/downspeed rate
+; Default: false
+accumulate-stats = true
+
+; Consider an `UNKNOWN` interface state as up.
+; Some devices like USB network adapters have
+; an unknown state, even when they're running
+; Default: false
+unknown-as-up = true
+
+
+[module/memory]
+type = internal/memory
+format = <label> <bar-used>
+label =
+
+bar-used-width = 30
+bar-used-foreground-0 = #aaff77
+bar-used-foreground-1 = #aaff77
+bar-used-foreground-2 = #fba922
+bar-used-foreground-3 = #ff5555
+bar-used-indicator = |
+bar-used-indicator-font = 6
+bar-used-indicator-foreground = #ff
+bar-used-fill = ─
+bar-used-fill-font = 6
+bar-used-empty = ─
+bar-used-empty-font = 6
+bar-used-empty-foreground = #444444
+
+
+[module/i3]
+type = internal/i3
+
+pin-workspaces = true
+strip-wsnumbers = true
+index-sort = true
+
+; Use fuzzy (partial) matching on labels when assigning
+; icons to workspaces
+; Example: code;♚ will apply the icon to all workspaces
+; containing &apos;code&apos; in the label
+; Default: false
+fuzzy-match = true
+
+;ws-icon-0 = 1♚
+;ws-icon-1 = 2♛
+;ws-icon-2 = 3♜
+;ws-icon-3 = 4♝
+;ws-icon-4 = 5♞
+;ws-icon-default = ♟
+
+label-dimmed-underline = ${root.background}
+
+; Available tags:
+;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
+;   <label-mode> (default)
+format = <label-state>
+
+; Available tokens:
+;   %mode%
+; Default: %mode%
+label-mode = %mode%
+label-mode-padding = 0
+label-mode-background = #e60053
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-focused =  %name%
+label-focused-foreground = #ffffff
+label-focused-background = #3f3f3f
+label-focused-underline = #fba922
+label-focused-padding = 4
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-unfocused = %name%
+label-unfocused-padding = 4
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-visible = %name%
+label-visible-underline = #555555
+label-visible-padding = 4
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-urgent = %name%
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-padding = 4
+
+; Separator in between workspaces
+label-separator = |
+label-separator-padding = 0
+label-separator-foreground = #ffb52a
+
+;i[module/spotify]
+;type = custom/script
+;interval = 5
+;format-prefix = "  "
+;format = <label>
+;exec = /home/nicomazz97/.config/polybar/spotify.py
+
+
+;h vim:ft=dosini
+
+
+[module/date]
+type = internal/date
+
+; Seconds to sleep between updates
+interval = 1.0
+format-padding = 2
+format-background = #c9aaaa
+format-foreground = #000000
+; See "http://en.cppreference.com/w/cpp/io/manip/put_time" for details on how to format the date string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+date-alt = %Y-%m-%d%
+
+; Optional time format
+time-alt = %H:%M
+
+; if `date-alt` or `time-alt` is defined, clicking
+; the module will toggle between formats
+date = %A, %d %B %Y
+time = %H:%M:%S
+; Available tags:
+;   <label> (default)
+;format = 🕓 <label>
+format =   <label>
+; Available tokens:
+;   %date%
+;   %time%
+; Default: %date%
+label = %date% %time%
+#label-font = 3
+#label-foreground = #9A32DB
+
+
+;[module/consumation]
+;type = custom/script
+
+;exec = /home/fhq/.config/polybar/power.sh
+;interval = 2
+
+
+[module/networkspeedup]
+type = internal/network
+interface = ${env:DEFAULT_NETWORK_INTERFACE}
+label-connected = "%upspeed:7%"
+format-connected = <label-connected>
+format-connected-prefix = " "
+format-connected-prefix-foreground = #000000
+format-connected-foreground=#000000
+format-connected-background=#c9aaaa
+format-connected-padding=2
+
+[module/networkspeeddown]
+type = internal/network
+interface = ${env:DEFAULT_NETWORK_INTERFACE:wlp2s0}
+label-connected = "%downspeed:7%"
+format-connected-foreground=#000000
+format-connected-background=#b0b08b
+format-connected-padding=2
+format-connected = <label-connected>
+format-connected-prefix = " "
+format-connected-prefix-foreground = #000000
